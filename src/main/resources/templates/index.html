@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Druidic Transliterator</title>
+
+    <!-- Adobe Spectrum CSS -->
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-core.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-button.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-textfield.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-label.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-typography.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-page.css">
+    <link rel="stylesheet" href="https://opensource.adobe.com/spectrum-css/dist/spectrum-vars.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body class="spectrum spectrum--dark spectrum--medium">
+
+    <div class="rune-bg" aria-hidden="true">
+        <span>ᚠ</span><span>ᚢ</span><span>ᚦ</span><span>ᚨ</span><span>ᚱ</span>
+        <span>ᚲ</span><span>ᚷ</span><span>ᚹ</span><span>ᚺ</span><span>ᚾ</span>
+        <span>ᛁ</span><span>ᛃ</span><span>ᛇ</span><span>ᛈ</span><span>ᛉ</span>
+        <span>ᛊ</span><span>ᛏ</span><span>ᛒ</span><span>ᛖ</span><span>ᛗ</span>
+        <span>ᛚ</span><span>ᛜ</span><span>ᛞ</span><span>ᛟ</span><span>ᛦ</span>
+    </div>
+
+    <div class="page-wrapper">
+
+        <header class="site-header">
+            <div class="header-ornament" aria-hidden="true">
+                <span class="rune-accent">ᚠ</span>
+                <div class="divider-line"></div>
+                <span class="rune-accent">ᚢ</span>
+                <div class="divider-line"></div>
+                <span class="rune-accent">ᚦ</span>
+                <div class="divider-line"></div>
+                <span class="rune-accent">ᚨ</span>
+                <div class="divider-line"></div>
+                <span class="rune-accent">ᚱ</span>
+                <div class="divider-line"></div>
+                <span class="rune-accent">ᚲ</span>
+            </div>
+            <h1 class="site-title">Druidic Transliterator</h1>
+            <p class="site-subtitle">Transcribe your words into the ancient Elder Futhark runes</p>
+        </header>
+
+        <main class="main-card">
+            <form method="post" th:action="@{/transliterate}" id="transliterator-form">
+
+                <section class="input-section">
+                    <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM" for="inputText">
+                        ᛖᚾᚷᛚᛁᛊᚺ — English Input
+                    </label>
+                    <div class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM input-field-wrapper">
+                        <textarea
+                            id="inputText"
+                            name="inputText"
+                            class="spectrum-Textfield-input"
+                            placeholder="Enter your text here…"
+                            rows="4"
+                            maxlength="500"
+                            th:text="${inputText}"
+                            autofocus></textarea>
+                    </div>
+                    <p class="field-hint">Spaces become runic word separators (᛫). Punctuation is dropped.</p>
+                </section>
+
+                <div class="button-row">
+                    <button type="submit"
+                            class="spectrum-Button spectrum-Button--fill spectrum-Button--accent spectrum-Button--sizeL translate-btn">
+                        <span class="spectrum-Button-label">
+                            <span class="btn-rune" aria-hidden="true">ᚱ</span>
+                            Transliterate
+                            <span class="btn-rune" aria-hidden="true">ᚱ</span>
+                        </span>
+                    </button>
+                    <a href="/"
+                       class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeL clear-btn">
+                        <span class="spectrum-Button-label">Clear</span>
+                    </a>
+                </div>
+
+                <th:block th:if="${result != null and result.hasContent()}">
+                    <div class="result-divider">
+                        <span class="divider-rune" aria-hidden="true">᛭</span>
+                        <div class="hr-line"></div>
+                        <span class="divider-rune" aria-hidden="true">᛭</span>
+                    </div>
+
+                    <section class="output-section" id="output">
+                        <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
+                            ᚠᚢᚦᚨᚱᚲ — Elder Futhark Output
+                        </label>
+                        <div class="rune-output-card">
+                            <div class="rune-output-glow" aria-hidden="true"></div>
+                            <p class="rune-output-text" th:text="${result.runeText()}"></p>
+                        </div>
+                        <div class="copy-row">
+                            <button type="button"
+                                    class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS copy-btn"
+                                    th:attr="data-text=${result.runeText()}">
+                                <span class="spectrum-Button-label">⎘ Copy runes</span>
+                            </button>
+                            <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
+                        </div>
+                    </section>
+                </th:block>
+
+            </form>
+        </main>
+
+        <details class="legend-details">
+            <summary class="legend-summary">ᚠᚢᚦᚨᚱᚲ Rune Reference</summary>
+            <div class="legend-grid">
+                <div class="legend-pair"><span class="legend-rune">ᚠ</span><span class="legend-letter">F</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚢ</span><span class="legend-letter">U/V</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚦ</span><span class="legend-letter">TH</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚨ</span><span class="legend-letter">A</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚱ</span><span class="legend-letter">R</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚲ</span><span class="legend-letter">K/C/Q</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚷ</span><span class="legend-letter">G</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚹ</span><span class="legend-letter">W</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚺ</span><span class="legend-letter">H</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᚾ</span><span class="legend-letter">N</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛁ</span><span class="legend-letter">I</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛃ</span><span class="legend-letter">J/Y</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛈ</span><span class="legend-letter">P</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛉ</span><span class="legend-letter">Z</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛊ</span><span class="legend-letter">S/X</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛏ</span><span class="legend-letter">T</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛒ</span><span class="legend-letter">B</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛖ</span><span class="legend-letter">E</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛗ</span><span class="legend-letter">M</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛚ</span><span class="legend-letter">L</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛜ</span><span class="legend-letter">NG</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛞ</span><span class="legend-letter">D</span></div>
+                <div class="legend-pair"><span class="legend-rune">ᛟ</span><span class="legend-letter">O</span></div>
+            </div>
+        </details>
+
+        <footer class="site-footer">
+            <p>Elder Futhark · Proto-Germanic runic alphabet · ~150 to ~800 CE</p>
+        </footer>
+
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

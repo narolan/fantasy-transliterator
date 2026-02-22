@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: druidic-transliterator
+    runtime: docker
+    plan: free          # change to 'starter' or higher for production
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 8080
