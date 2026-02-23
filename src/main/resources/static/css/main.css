@@ -2,6 +2,14 @@
    Druidic Transliterator — main.css
    =================================================== */
 
+@font-face {
+    font-family: 'Tengwar Annatar';
+    src: url('/fonts/tngan-webfont.woff2') format('woff2'),
+    url('/fonts/tngan-webfont.woff')  format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --color-bg:         #0c0b0f;
     --color-surface:    #15131c;
@@ -208,6 +216,50 @@ body.spectrum {
     margin-top: 0.5rem;
 }
 
+/* ── Script selector ── */
+.script-section { margin-bottom: 1.5rem; }
+
+.script-select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.script-select {
+    appearance: none;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    padding: 0.6rem 3rem 0.6rem 1rem;
+    cursor: pointer;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    min-width: 200px;
+}
+
+.script-select:focus {
+    outline: none;
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+}
+
+.script-select option {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+}
+
+.select-arrow {
+    position: absolute;
+    right: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-gold);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
 /* ── Buttons ── */
 .button-row {
     display: flex;
@@ -306,10 +358,11 @@ body.spectrum {
     0%, 100% { opacity: 0.5; }
     50%       { opacity: 1; }
 }
+
 .rune-output-text {
+    font-family: 'Tengwar Annatar', 'Noto Sans Runic', var(--font-body), serif;
     position: relative;
     z-index: 1;
-    font-family: 'Noto Sans Runic', var(--font-body), serif;
     font-size: clamp(1.5rem, 4vw, 2.2rem);
     color: var(--color-gold-light);
     letter-spacing: 0.12em;

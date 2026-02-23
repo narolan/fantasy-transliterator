@@ -3,6 +3,7 @@ package com.druidic.transliterator.adapter.out.transliteration;
 import com.druidic.transliterator.core.TransliterationRequest;
 import com.druidic.transliterator.core.TransliterationResult;
 import com.druidic.transliterator.port.in.TransliteratePort;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,6 +16,7 @@ import java.util.Map;
  * (Elder Futhark, Younger Futhark, Anglo-Saxon futhorc…) is swappable
  * without touching ports or domain models.
  */
+@Qualifier("elderFuthark")
 @Component
 public class FutharkTransliterator implements TransliteratePort {
 
