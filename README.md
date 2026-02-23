@@ -1,35 +1,61 @@
-# Druidic Transliterator
+# Fantasy Transliterator
 
-A Spring Boot web application that transliterates English text into Elder Futhark runes. Built with Java 17, Spring Boot 3, Thymeleaf, and Adobe Spectrum CSS.
+A full-stack web application that transliterates English text into ancient and fictional scripts. Currently supports **Elder Futhark** runes and **Tengwar** (Tolkien's Elvish script), with a clean dropdown to switch between them.
+
+Built with Java 17, Spring Boot 3, Thymeleaf (server-side rendering), Gradle, and Adobe Spectrum CSS. Deployable to [Render](https://render.com) via Docker.
+
+🌐 **Live demo:** [fantasy-transliterator.onrender.com](https://fantasy-transliterator.onrender.com/transliterate)
+
+---
+
+## What to expect
+
+Type any English text into the input field, select a script from the dropdown, and hit **Transliterate**. The output renders immediately below in the chosen script.
+
+**Elder Futhark** uses actual Unicode Runic characters (U+16A0–U+16FF) — these render in any modern browser without any extra setup.
+
+**Tengwar** uses the Tengwar Annatar font (included in `static/fonts/`) with Daniel Smith's standard encoding. The font loads automatically — no installation needed.
+
+A few things to know:
+- Punctuation is dropped — only letters and spaces are transliterated
+- Spaces become runic word separators in Elder Futhark (᛫)
+- Tengwar handles digraphs (`th`, `ch`, `sh`, `ph`, `wh`, `ng`, `ck`) as single glyphs, and vowels are written as diacritics above the preceding consonant
+- The output can be copied to clipboard with the copy button
+
+---
 
 ## Architecture
 
-The project follows **hexagonal architecture** (ports & adapters):
+The project follows **hexagonal architecture** (ports & adapters) with three top-level packages:
 
 ```
 src/main/java/com/druidic/transliterator/
-├── core/                          # Domain value objects — no framework deps
-│   ├── TransliterationRequest
-│   └── TransliterationResult
+├── core/                                   # Value objects — zero framework dependencies
+│   ├── Script                              # Enum: ELDER_FUTHARK, TENGWAR
+│   ├── TransliterationRequest              # Input value object (text + script)
+│   └── TransliterationResult              # Output value object (original + transliterated)
 ├── port/
 │   ├── in/
-│   │   └── TransliteratePort      # Input port (interface)
+│   │   └── TransliteratePort              # Input port interface (driving side)
 │   └── out/
-│       └── SaveTransliterationPort # Output port (interface, unwired)
+│       └── SaveTransliterationPort        # Output port interface (driven side, unwired)
 └── adapter/
     ├── in/
     │   └── web/
-    │       └── TransliteratorController  # Thymeleaf controller
+    │       └── TransliteratorController   # Thymeleaf controller — depends on port only
     └── out/
         └── transliteration/
-            └── FutharkTransliterator     # Elder Futhark logic
+            ├── FutharkTransliterator      # Elder Futhark implementation
+            └── TengwarTransliterator      # Tengwar implementation (English Mode 6)
 ```
+
+Adding a new script means adding one class in `adapter/out/transliteration/`, one entry in the `Script` enum, and wiring it in the controller — nothing else changes.
+
+---
 
 ## Running locally
 
-**Prerequisites:** Java 17+, Docker (optional)
-
-### With Gradle
+**Prerequisites:** Java 17+
 
 ```bash
 ./gradlew bootRun
@@ -44,26 +70,29 @@ docker build -t druidic-transliterator .
 docker run -p 8080:8080 druidic-transliterator
 ```
 
+---
+
 ## Deploying to Render
 
-The repo includes a `render.yaml` for [Render](https://render.com) Blueprint deploys.
+The repo includes a `render.yaml` so Render can configure itself automatically.
 
-1. Push this repo to GitHub.
-2. In Render, go to **New → Blueprint** and connect your GitHub repo.
-3. Render will detect `render.yaml` and configure the service automatically.
-4. The first deploy builds the Docker image and starts the service — typically takes 3–5 minutes.
+1. Push the repo to GitHub
+2. Go to [render.com](https://render.com) → **New → Web Service**
+3. Connect your GitHub repo
+4. Render detects the `render.yaml` and pre-fills all settings
+5. Click **Create Web Service** — the first build takes 3–5 minutes
 
-Alternatively, create the service manually via **New → Web Service**, point it at your repo, and set:
+Once live, Render gives you a public URL and automatically redeploys on every push to `main`.
 
-| Setting | Value |
-|---|---|
-| Runtime | Docker |
-| Dockerfile path | `./Dockerfile` |
-| Port | `8080` |
+> **Note:** On the free tier, the service sleeps after 15 minutes of inactivity and takes ~30 seconds to wake up on the next request. Upgrade to the Starter plan to keep it always on.
 
-## Rune mapping
+---
 
-The transliterator maps each Latin letter to its closest Elder Futhark equivalent (~150–800 CE). Letters without a direct phonetic match (C, Q, V, X, Y) are mapped to the nearest sound. Spaces become the runic word separator ᛫, and punctuation is dropped.
+## Script reference
+
+### Elder Futhark (~150–800 CE)
+
+Letters without a direct phonetic match are mapped to the nearest sound. Spaces become ᛫.
 
 | Latin | Rune | Name |
 |---|---|---|
@@ -88,3 +117,32 @@ The transliterator maps each Latin letter to its closest Elder Futhark equivalen
 | U, V | ᚢ | Uruz |
 | W | ᚹ | Wunjo |
 | Z | ᛉ | Algiz |
+
+### Tengwar — English Mode 6
+
+Uses the Tengwar Annatar font by Johan Winge with Daniel Smith's standard encoding. Vowels are tehtar (diacritics) placed above the preceding consonant; standalone vowels sit on a short carrier. Digraphs are mapped to a single tengwa.
+
+| Input | Tengwa |
+|---|---|
+| t | tinco |
+| p | parma |
+| c, k, q | quesse |
+| d | ando |
+| b | umbar |
+| f, ph | formen |
+| v | ampa |
+| g | ungwe |
+| n | numen |
+| m | malta |
+| r | ore |
+| l | lambe |
+| s | silme |
+| z | esse |
+| h | hyarmen |
+| w | vala |
+| y | anna |
+| th | súle |
+| ng | nwalme |
+| sh | harma |
+| wh | hwesta |
+| ch | calma |
