@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Outbound adapter — Elder Futhark transliteration engine.
- *
  * Implements the input port. Contains all transliteration logic;
  * this is intentionally kept out of the core so the mapping strategy
  * (Elder Futhark, Younger Futhark, Anglo-Saxon futhorc…) is swappable
@@ -59,22 +59,15 @@ public class FutharkTransliterator implements TransliteratePort {
             return new TransliterationResult(input, "");
         }
 
-        StringBuilder runes = new StringBuilder();
+        String runes = input.toLowerCase()
+                .chars()
+                .mapToObj(ch -> switch ((char) ch) {
+                    case ' '  -> " ";
+                    case '\n' -> "\n";
+                    default   -> RUNE_MAP.getOrDefault((char) ch, "");
+                })
+                .collect(Collectors.joining());
 
-        for (char ch : input.toLowerCase().toCharArray()) {
-            if (ch == ' ') {
-                runes.append(" ᛫ ");   // runic word separator
-            } else if (ch == '\n') {
-                runes.append('\n');
-            } else {
-                String rune = RUNE_MAP.get(ch);
-                if (rune != null) {
-                    runes.append(rune);
-                }
-                // punctuation and unmapped chars are intentionally dropped
-            }
-        }
-
-        return new TransliterationResult(input, runes.toString());
+        return new TransliterationResult(input, runes);
     }
 }
