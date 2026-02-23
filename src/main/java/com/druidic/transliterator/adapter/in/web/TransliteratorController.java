@@ -32,11 +32,25 @@ public class TransliteratorController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("inputText", "");
-        model.addAttribute("result", null);
+    public String index(
+            @RequestParam(defaultValue = "")              String text,
+            @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
+            Model model) {
+
+        Script selectedScript = Script.valueOf(script);
         model.addAttribute("scripts", Script.values());
-        model.addAttribute("selectedScript", Script.ELDER_FUTHARK);
+        model.addAttribute("selectedScript", selectedScript);
+
+        if (!text.isBlank()) {
+            TransliterationResult result = transliterators.get(selectedScript)
+                    .transliterate(new TransliterationRequest(text, selectedScript));
+            model.addAttribute("inputText", text);
+            model.addAttribute("result", result);
+        } else {
+            model.addAttribute("inputText", "");
+            model.addAttribute("result", null);
+        }
+
         return "index";
     }
 

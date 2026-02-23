@@ -373,7 +373,7 @@ body.spectrum {
 
 .copy-row { display: flex; align-items: center; gap: 1rem; margin-top: 0.8rem; }
 
-.copy-btn {
+.copy-btn, .share-btn {
     font-family: var(--font-body) !important;
     font-size: 0.9rem !important;
     color: var(--color-text-muted) !important;
@@ -382,7 +382,7 @@ body.spectrum {
     cursor: pointer;
     transition: all var(--transition) !important;
 }
-.copy-btn:hover { border-color: var(--color-gold) !important; color: var(--color-gold) !important; }
+.copy-btn:hover, .share-btn:hover { border-color: var(--color-gold) !important; color: var(--color-gold) !important; }
 
 .copy-feedback {
     font-size: 0.9rem;

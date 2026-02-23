@@ -124,6 +124,11 @@
                                     th:attr="data-text=${result.runeText()}">
                                 <span class="spectrum-Button-label">⎘ Copy</span>
                             </button>
+                            <button type="button"
+                                    class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS share-btn"
+                                    th:attr="data-text=${inputText}, data-script=${selectedScript.name()}">
+                                <span class="spectrum-Button-label">⎘ Share</span>
+                            </button>
                             <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
                         </div>
                     </section>

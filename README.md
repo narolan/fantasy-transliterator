@@ -21,6 +21,7 @@ A few things to know:
 - Spaces become runic word separators in Elder Futhark (᛫)
 - Tengwar handles digraphs (`th`, `ch`, `sh`, `ph`, `wh`, `ng`, `ck`) as single glyphs, and vowels are written as diacritics above the preceding consonant
 - The output can be copied to clipboard with the copy button
+- The share button copies a direct URL to the current transliteration — anyone opening the link will see the same input and output immediately
 
 ---
 

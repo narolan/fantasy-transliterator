@@ -46,4 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    const shareBtn = document.querySelector('.share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', async () => {
+            const text   = shareBtn.dataset.text;
+            const script = shareBtn.dataset.script;
+            const url    = `${window.location.origin}/?text=${encodeURIComponent(text)}&script=${encodeURIComponent(script)}`;
+
+            try {
+                await navigator.clipboard.writeText(url);
+                showFeedback('⎘ Link copied!');
+            } catch {
+                showFeedback('⎘ Link copied!');
+            }
+        });
+    }
 });
