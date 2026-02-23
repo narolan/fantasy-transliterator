@@ -11,10 +11,8 @@ import java.util.Map;
 
 /**
  * Tengwar transliterator using English Tengwar Mode with Tengwar Annatar font encoding.
- *
  * Uses Daniel Smith's de facto standard encoding — glyphs are mapped to Latin/special
  * characters based on the QWERTY keyboard layout, NOT to their phonetic Latin equivalents.
- *
  * Vowels (tehtar) are diacritics placed on the preceding consonant. If a vowel has no
  * preceding consonant it is placed on the short carrier (backtick).
  */
@@ -86,60 +84,29 @@ public class TengwarTransliterator implements TransliteratePort {
         StringBuilder out = new StringBuilder();
         StringBuilder pending = new StringBuilder();
 
-        int i = 0;
-        while (i < lower.length()) {
+        for (int i = 0; i < lower.length(); i++) {
             char ch = lower.charAt(i);
+            String lookahead = i + 1 < lower.length() ? "" + ch + lower.charAt(i + 1) : "";
 
-            // ── Whitespace ────────────────────────────────────────────────────
             if (ch == ' ' || ch == '\n') {
                 flushPending(out, pending);
                 out.append(ch == ' ' ? " " : "\n");
+            } else if (DIGRAPHS.containsKey(lookahead)) {
+                flushPending(out, pending);
+                pending.append(DIGRAPHS.get(lookahead));
                 i++;
-                continue;
-            }
-
-            // ── Digraph check ─────────────────────────────────────────────────
-            if (i + 1 < lower.length()) {
-                String pair = "" + ch + lower.charAt(i + 1);
-                if (DIGRAPHS.containsKey(pair)) {
-                    flushPending(out, pending);
-                    pending.append(DIGRAPHS.get(pair));
-                    i += 2;
-                    continue;
-                }
-            }
-
-            // ── Double consonant check ────────────────────────────────────────
-            if (i + 1 < lower.length() && ch == lower.charAt(i + 1) && CONSONANTS.containsKey(ch)) {
+            } else if (!lookahead.isEmpty() && ch == lower.charAt(i + 1) && CONSONANTS.containsKey(ch)) {
                 flushPending(out, pending);
                 pending.append(CONSONANTS.get(ch)).append(DOUBLE_MARK);
-                i += 2;
-                continue;
-            }
-
-            // ── Vowel ─────────────────────────────────────────────────────────
-            if (VOWELS.containsKey(ch)) {
-                String tehta = VOWELS.get(ch);
-                if (pending.length() > 0) {
-                    out.append(pending).append(tehta);
-                    pending.setLength(0);
-                } else {
-                    out.append(SHORT_CARRIER).append(tehta);
-                }
                 i++;
-                continue;
-            }
-
-            // ── Consonant ─────────────────────────────────────────────────────
-            if (CONSONANTS.containsKey(ch)) {
+            } else if (VOWELS.containsKey(ch)) {
+                out.append(pending.isEmpty() ? SHORT_CARRIER : pending.toString()).append(VOWELS.get(ch));
+                pending.setLength(0);
+            } else if (CONSONANTS.containsKey(ch)) {
                 flushPending(out, pending);
                 pending.append(CONSONANTS.get(ch));
-                i++;
-                continue;
             }
-
-            // ── Unmapped — drop ───────────────────────────────────────────────
-            i++;
+            // unmapped — drop
         }
 
         flushPending(out, pending);
@@ -147,7 +114,7 @@ public class TengwarTransliterator implements TransliteratePort {
     }
 
     private void flushPending(StringBuilder out, StringBuilder pending) {
-        if (pending.length() > 0) {
+        if (!pending.isEmpty()) {
             out.append(pending);
             pending.setLength(0);
         }
