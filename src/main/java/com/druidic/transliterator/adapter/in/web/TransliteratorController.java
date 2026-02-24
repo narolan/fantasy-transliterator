@@ -37,7 +37,12 @@ public class TransliteratorController {
             @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
             Model model) {
 
-        Script selectedScript = Script.valueOf(script);
+        Script selectedScript;
+        try {
+            selectedScript = Script.valueOf(script);
+        } catch (IllegalArgumentException e) {
+            selectedScript = Script.ELDER_FUTHARK;
+        }
         model.addAttribute("scripts", Script.values());
         model.addAttribute("selectedScript", selectedScript);
 
@@ -54,13 +59,18 @@ public class TransliteratorController {
         return "index";
     }
 
-    @PostMapping("/transliterate")
+    @PostMapping("/")
     public String transliterate(
             @RequestParam(defaultValue = "") String inputText,
             @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
             Model model) {
 
-        Script selectedScript = Script.valueOf(script);
+        Script selectedScript;
+        try {
+            selectedScript = Script.valueOf(script);
+        } catch (IllegalArgumentException e) {
+            selectedScript = Script.ELDER_FUTHARK;
+        }
         TransliteratePort transliterator = transliterators.get(selectedScript);
 
         TransliterationResult result = transliterator.transliterate(

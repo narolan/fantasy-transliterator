@@ -27,3 +27,6 @@ Thumbs.db
 # Environment — never commit secrets
 .env
 *.env.local
+
+# Claude
+.claude/

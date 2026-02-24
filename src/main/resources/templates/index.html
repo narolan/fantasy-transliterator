@@ -48,15 +48,15 @@
                 <span class="rune-accent">ᚲ</span>
             </div>
             <h1 class="site-title">Druidic Transliterator</h1>
-            <p class="site-subtitle">Transcribe your words into the ancient Elder Futhark runes</p>
+            <p class="site-subtitle">Transcribe your words into ancient and fictional scripts</p>
         </header>
 
         <main class="main-card">
-            <form method="post" th:action="@{/transliterate}" id="transliterator-form">
+            <form method="post" th:action="@{/}" id="transliterator-form">
 
                 <section class="input-section">
                     <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-                        <span th:text="${selectedScript.displayName}">Script</span> Output
+                        Your Text
                     </label>
                     <div class="spectrum-Textfield spectrum-Textfield--multiline spectrum-Textfield--sizeM input-field-wrapper">
         <textarea
@@ -111,8 +111,9 @@
                     </div>
 
                     <section class="output-section" id="output">
-                        <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM">
-                            ᚠᚢᚦᚨᚱᚲ — Elder Futhark Output
+                        <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM"
+                               th:text="${selectedScript.displayName + ' Output'}">
+                            Output
                         </label>
                         <div class="rune-output-card">
                             <div class="rune-output-glow" aria-hidden="true"></div>
@@ -137,7 +138,7 @@
             </form>
         </main>
 
-        <details class="legend-details">
+        <details class="legend-details" th:if="${selectedScript.name() == 'ELDER_FUTHARK'}">
             <summary class="legend-summary">ᚠᚢᚦᚨᚱᚲ Rune Reference</summary>
             <div class="legend-grid">
                 <div class="legend-pair"><span class="legend-rune">ᚠ</span><span class="legend-letter">F</span></div>
@@ -166,8 +167,37 @@
             </div>
         </details>
 
+        <details class="legend-details" th:if="${selectedScript.name() == 'TENGWAR'}">
+            <summary class="legend-summary">Tengwar Reference</summary>
+            <div class="legend-grid tengwar-legend">
+                <div class="legend-pair"><span class="legend-rune tengwar-font">1</span><span class="legend-letter">T</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">q</span><span class="legend-letter">P</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">a</span><span class="legend-letter">CH</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">z</span><span class="legend-letter">K/C/Q</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">2</span><span class="legend-letter">D</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">w</span><span class="legend-letter">B</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">s</span><span class="legend-letter">G</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">3</span><span class="legend-letter">TH</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">e</span><span class="legend-letter">F/PH</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">u</span><span class="legend-letter">SH</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">r</span><span class="legend-letter">V</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">5</span><span class="legend-letter">N</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">t</span><span class="legend-letter">M</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">g</span><span class="legend-letter">NG</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">6</span><span class="legend-letter">R</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">j</span><span class="legend-letter">L</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">8</span><span class="legend-letter">S</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">i</span><span class="legend-letter">Z</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">9</span><span class="legend-letter">H</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">n</span><span class="legend-letter">W</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">h</span><span class="legend-letter">Y</span></div>
+                <div class="legend-pair"><span class="legend-rune tengwar-font">Q</span><span class="legend-letter">WH</span></div>
+            </div>
+        </details>
+
         <footer class="site-footer">
-            <p>Elder Futhark · Proto-Germanic runic alphabet · ~150 to ~800 CE</p>
+            <p th:if="${selectedScript.name() == 'ELDER_FUTHARK'}">Elder Futhark · Proto-Germanic runic alphabet · ~150 to ~800 CE</p>
+            <p th:if="${selectedScript.name() == 'TENGWAR'}">Tengwar · Tolkien's Elvish script · English Mode</p>
         </footer>
 
     </div>

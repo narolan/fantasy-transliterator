@@ -34,7 +34,7 @@ html { scroll-behavior: smooth; }
 body.spectrum {
     background-color: var(--color-bg);
     color: var(--color-text);
-    font-family: var(--font-body);
+    font-family: var(--font-body), sans-serif;
     font-size: 18px;
     line-height: 1.7;
     min-height: 100vh;
@@ -134,7 +134,7 @@ body.spectrum {
 }
 
 .site-title {
-    font-family: var(--font-display);
+    font-family: var(--font-display), sans-serif;
     font-size: clamp(1.8rem, 6vw, 3.2rem);
     font-weight: 900;
     color: var(--color-gold-light);
@@ -145,7 +145,7 @@ body.spectrum {
 }
 
 .site-subtitle {
-    font-family: var(--font-body);
+    font-family: var(--font-body), sans-serif;
     font-size: 1.1rem;
     font-style: italic;
     color: var(--color-text-muted);
@@ -178,7 +178,7 @@ body.spectrum {
 .input-section { margin-bottom: 1.5rem; }
 
 .spectrum-FieldLabel {
-    font-family: var(--font-display) !important;
+    font-family: var(--font-display), sans-serif !important;
     font-size: 0.75rem !important;
     color: var(--color-gold) !important;
     letter-spacing: 0.12em !important;
@@ -194,7 +194,7 @@ body.spectrum {
     border: 1px solid var(--color-border) !important;
     border-radius: 8px !important;
     color: var(--color-text) !important;
-    font-family: var(--font-body) !important;
+    font-family: var(--font-body), sans-serif !important;
     font-size: 1.1rem !important;
     padding: 0.85rem 1rem !important;
     resize: vertical;
@@ -230,7 +230,7 @@ body.spectrum {
     border: 1px solid var(--color-border);
     border-radius: 8px;
     color: var(--color-text);
-    font-family: var(--font-display);
+    font-family: var(--font-display), sans-serif;
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     padding: 0.6rem 3rem 0.6rem 1rem;
@@ -270,7 +270,7 @@ body.spectrum {
 }
 
 .translate-btn {
-    font-family: var(--font-display) !important;
+    font-family: var(--font-display), sans-serif !important;
     font-size: 0.85rem !important;
     letter-spacing: 0.08em !important;
     background: linear-gradient(135deg, var(--color-gold-dim), var(--color-gold)) !important;
@@ -301,7 +301,7 @@ body.spectrum {
 .btn-rune { opacity: 0.7; margin: 0 0.3em; font-family: serif; }
 
 .clear-btn {
-    font-family: var(--font-body) !important;
+    font-family: var(--font-body), sans-serif !important;
     color: var(--color-text-muted) !important;
     border-color: var(--color-border) !important;
     font-size: 1rem !important;
@@ -374,7 +374,7 @@ body.spectrum {
 .copy-row { display: flex; align-items: center; gap: 1rem; margin-top: 0.8rem; }
 
 .copy-btn, .share-btn {
-    font-family: var(--font-body) !important;
+    font-family: var(--font-body), sans-serif !important;
     font-size: 0.9rem !important;
     color: var(--color-text-muted) !important;
     border-color: var(--color-border) !important;
@@ -401,7 +401,7 @@ body.spectrum {
     padding: 1rem 1.5rem;
 }
 .legend-summary {
-    font-family: var(--font-display);
+    font-family: var(--font-display), sans-serif;
     font-size: 0.8rem;
     letter-spacing: 0.1em;
     color: var(--color-gold);
@@ -438,8 +438,12 @@ details[open] .legend-summary::before { content: '▾ '; }
     text-shadow: 0 0 8px rgba(201,168,76,0.4);
     line-height: 1;
 }
+.legend-rune.tengwar-font {
+    font-family: 'Tengwar Annatar', serif;
+    font-size: 1.8rem;
+}
 .legend-letter {
-    font-family: var(--font-display);
+    font-family: var(--font-display), sans-serif;
     font-size: 0.6rem;
     letter-spacing: 0.1em;
     color: var(--color-text-muted);

@@ -2,9 +2,28 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ── Feedback helper ───────────────────────────────
+    const copyFeedback = document.getElementById('copyFeedback');
+
+    function showFeedback(msg) {
+        if (!copyFeedback) return;
+        copyFeedback.textContent = msg;
+        copyFeedback.classList.add('visible');
+        setTimeout(() => copyFeedback.classList.remove('visible'), 2200);
+    }
+
+    function clipboardFallback(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+    }
+
     // ── Copy runes ──────────────────────────────────
     const copyBtn = document.querySelector('.copy-btn');
-    const copyFeedback = document.getElementById('copyFeedback');
 
     if (copyBtn) {
         copyBtn.addEventListener('click', async () => {
@@ -13,22 +32,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 await navigator.clipboard.writeText(text);
                 showFeedback('ᚢ Copied to clipboard!');
             } catch {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                ta.style.cssText = 'position:fixed;opacity:0';
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
+                clipboardFallback(text);
                 showFeedback('ᚢ Copied!');
             }
         });
-
-        function showFeedback(msg) {
-            copyFeedback.textContent = msg;
-            copyFeedback.classList.add('visible');
-            setTimeout(() => copyFeedback.classList.remove('visible'), 2200);
-        }
     }
 
     // ── Scroll to output after SSR form submit ──────
@@ -58,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 await navigator.clipboard.writeText(url);
                 showFeedback('⎘ Link copied!');
             } catch {
+                clipboardFallback(url);
                 showFeedback('⎘ Link copied!');
             }
         });

@@ -18,7 +18,7 @@ Type any English text into the input field, select a script from the dropdown, a
 
 A few things to know:
 - Punctuation is dropped — only letters and spaces are transliterated
-- Spaces become runic word separators in Elder Futhark (᛫)
+- Spaces are preserved as word separators
 - Tengwar handles digraphs (`th`, `ch`, `sh`, `ph`, `wh`, `ng`, `ck`) as single glyphs, and vowels are written as diacritics above the preceding consonant
 - The output can be copied to clipboard with the copy button
 - The share button copies a direct URL to the current transliteration — anyone opening the link will see the same input and output immediately
@@ -93,7 +93,7 @@ Once live, Render gives you a public URL and automatically redeploys on every pu
 
 ### Elder Futhark (~150–800 CE)
 
-Letters without a direct phonetic match are mapped to the nearest sound. Spaces become ᛫.
+Letters without a direct phonetic match are mapped to the nearest sound. Spaces are preserved.
 
 | Latin | Rune | Name |
 |---|---|---|
