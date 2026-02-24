@@ -20,6 +20,7 @@ import java.util.Map;
 @Controller
 public class TransliteratorController {
 
+    private static final int MAX_INPUT_LENGTH = 500;
 
     private final Map<Script, TransliteratePort> transliterators;
 
@@ -37,19 +38,29 @@ public class TransliteratorController {
             @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
             Model model) {
 
-        Script selectedScript;
-        try {
-            selectedScript = Script.valueOf(script);
-        } catch (IllegalArgumentException e) {
-            selectedScript = Script.ELDER_FUTHARK;
-        }
+        return handleTransliteration(text, script, model);
+    }
+
+    @PostMapping("/")
+    public String transliterate(
+            @RequestParam(defaultValue = "") String inputText,
+            @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
+            Model model) {
+
+        return handleTransliteration(inputText, script, model);
+    }
+
+    private String handleTransliteration(String inputText, String scriptParam, Model model) {
+        Script selectedScript = parseScript(scriptParam);
+        String trimmedInput = truncate(inputText);
+
         model.addAttribute("scripts", Script.values());
         model.addAttribute("selectedScript", selectedScript);
 
-        if (!text.isBlank()) {
+        if (!trimmedInput.isBlank()) {
             TransliterationResult result = transliterators.get(selectedScript)
-                    .transliterate(new TransliterationRequest(text, selectedScript));
-            model.addAttribute("inputText", text);
+                    .transliterate(new TransliterationRequest(trimmedInput, selectedScript));
+            model.addAttribute("inputText", trimmedInput);
             model.addAttribute("result", result);
         } else {
             model.addAttribute("inputText", "");
@@ -59,28 +70,18 @@ public class TransliteratorController {
         return "index";
     }
 
-    @PostMapping("/")
-    public String transliterate(
-            @RequestParam(defaultValue = "") String inputText,
-            @RequestParam(defaultValue = "ELDER_FUTHARK") String script,
-            Model model) {
-
-        Script selectedScript;
+    private Script parseScript(String raw) {
         try {
-            selectedScript = Script.valueOf(script);
+            return Script.valueOf(raw);
         } catch (IllegalArgumentException e) {
-            selectedScript = Script.ELDER_FUTHARK;
+            return Script.ELDER_FUTHARK;
         }
-        TransliteratePort transliterator = transliterators.get(selectedScript);
+    }
 
-        TransliterationResult result = transliterator.transliterate(
-                new TransliterationRequest(inputText, selectedScript)
-        );
-
-        model.addAttribute("inputText", inputText);
-        model.addAttribute("result", result);
-        model.addAttribute("scripts", Script.values());
-        model.addAttribute("selectedScript", selectedScript);
-        return "index";
+    private String truncate(String input) {
+        if (input.length() <= MAX_INPUT_LENGTH) {
+            return input;
+        }
+        return input.substring(0, MAX_INPUT_LENGTH);
     }
 }

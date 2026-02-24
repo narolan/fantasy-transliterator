@@ -6,7 +6,6 @@ import com.druidic.transliterator.port.in.TransliteratePort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -36,18 +35,16 @@ public class TengwarTransliterator implements TransliteratePort {
     );
 
     // Digraphs — checked before single consonants
-    private static final Map<String, String> DIGRAPHS;
-    static {
-        DIGRAPHS = new LinkedHashMap<>();
-        DIGRAPHS.put("th", "3");   // súle
-        DIGRAPHS.put("qu", "zz");  // quesse (q already maps to quesse so qu = quesse)
-        DIGRAPHS.put("wh", "Q");   // hwesta
-        DIGRAPHS.put("ch", "a");   // calma
-        DIGRAPHS.put("sh", "u");   // harma
-        DIGRAPHS.put("ph", "e");   // formen
-        DIGRAPHS.put("ng", "g");   // nwalme
-        DIGRAPHS.put("ck", "z");   // quesse
-    }
+    private static final Map<String, String> DIGRAPHS = Map.of(
+            "th", "3",   // súle
+            "qu", "zz",  // quesse (q already maps to quesse so qu = quesse)
+            "wh", "Q",   // hwesta
+            "ch", "a",   // calma
+            "sh", "u",   // harma
+            "ph", "e",   // formen
+            "ng", "g",   // nwalme
+            "ck", "z"    // quesse
+    );
 
     // Single consonants
     private static final Map<Character, String> CONSONANTS = Map.ofEntries(
