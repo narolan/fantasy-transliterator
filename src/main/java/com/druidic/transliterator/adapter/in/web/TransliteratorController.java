@@ -56,6 +56,7 @@ public class TransliteratorController {
 
         model.addAttribute("scripts", Script.values());
         model.addAttribute("selectedScript", selectedScript);
+        model.addAttribute("legend", transliterators.get(selectedScript).getLegend());
 
         if (!trimmedInput.isBlank()) {
             TransliterationResult result = transliterators.get(selectedScript)
