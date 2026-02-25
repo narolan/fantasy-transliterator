@@ -62,6 +62,13 @@ class TengwarTransliteratorTest {
     }
 
     @Test
+    void doubledVowelDoesNotTriggerDoublingMark() {
+        // "aa" — both chars match (ch == next) but 'a' is not in CONSONANTS,
+        // so each vowel gets its own short carrier instead of a doubling mark
+        assertEquals("`#`#", transliterate("aa").runeText());
+    }
+
+    @Test
     void preservesSpaces() {
         assertEquals("1# 1#", transliterate("ta ta").runeText());
     }
