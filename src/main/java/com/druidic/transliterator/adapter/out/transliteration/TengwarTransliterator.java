@@ -1,11 +1,13 @@
 package com.druidic.transliterator.adapter.out.transliteration;
 
+import com.druidic.transliterator.core.LegendEntry;
 import com.druidic.transliterator.core.TransliterationRequest;
 import com.druidic.transliterator.core.TransliterationResult;
 import com.druidic.transliterator.port.in.TransliteratePort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -115,5 +117,22 @@ public class TengwarTransliterator implements TransliteratePort {
             out.append(pending);
             pending.setLength(0);
         }
+    }
+
+    @Override
+    public List<LegendEntry> getLegend() {
+        return List.of(
+            new LegendEntry("1", "T"),    new LegendEntry("q", "P"),
+            new LegendEntry("a", "CH"),   new LegendEntry("z", "K/C/Q"),
+            new LegendEntry("2", "D"),    new LegendEntry("w", "B"),
+            new LegendEntry("s", "G"),    new LegendEntry("3", "TH"),
+            new LegendEntry("e", "F/PH"), new LegendEntry("u", "SH"),
+            new LegendEntry("r", "V"),    new LegendEntry("5", "N"),
+            new LegendEntry("t", "M"),    new LegendEntry("g", "NG"),
+            new LegendEntry("6", "R"),    new LegendEntry("j", "L"),
+            new LegendEntry("8", "S"),    new LegendEntry("i", "Z"),
+            new LegendEntry("9", "H"),    new LegendEntry("n", "W"),
+            new LegendEntry("h", "Y"),    new LegendEntry("Q", "WH")
+        );
     }
 }

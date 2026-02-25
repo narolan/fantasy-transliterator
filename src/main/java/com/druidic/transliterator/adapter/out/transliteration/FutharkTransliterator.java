@@ -1,11 +1,13 @@
 package com.druidic.transliterator.adapter.out.transliteration;
 
+import com.druidic.transliterator.core.LegendEntry;
 import com.druidic.transliterator.core.TransliterationRequest;
 import com.druidic.transliterator.core.TransliterationResult;
 import com.druidic.transliterator.port.in.TransliteratePort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -69,5 +71,23 @@ public class FutharkTransliterator implements TransliteratePort {
                 .collect(Collectors.joining());
 
         return new TransliterationResult(input, runes);
+    }
+
+    @Override
+    public List<LegendEntry> getLegend() {
+        return List.of(
+            new LegendEntry("\u16A0", "F"),     new LegendEntry("\u16A2", "U/V"),
+            new LegendEntry("\u16A6", "TH"),    new LegendEntry("\u16A8", "A"),
+            new LegendEntry("\u16B1", "R"),     new LegendEntry("\u16B2", "K/C/Q"),
+            new LegendEntry("\u16B7", "G"),     new LegendEntry("\u16B9", "W"),
+            new LegendEntry("\u16BA", "H"),     new LegendEntry("\u16BE", "N"),
+            new LegendEntry("\u16C1", "I"),     new LegendEntry("\u16C3", "J/Y"),
+            new LegendEntry("\u16C8", "P"),     new LegendEntry("\u16C9", "Z"),
+            new LegendEntry("\u16CA", "S/X"),   new LegendEntry("\u16CF", "T"),
+            new LegendEntry("\u16D2", "B"),     new LegendEntry("\u16D6", "E"),
+            new LegendEntry("\u16D7", "M"),     new LegendEntry("\u16DA", "L"),
+            new LegendEntry("\u16DC", "NG"),    new LegendEntry("\u16DE", "D"),
+            new LegendEntry("\u16DF", "O")
+        );
     }
 }
