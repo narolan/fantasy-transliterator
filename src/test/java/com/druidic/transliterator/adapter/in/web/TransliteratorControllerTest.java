@@ -68,4 +68,11 @@ class TransliteratorControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("result"));
     }
+
+    @Test
+    void modelContainsLegendData() throws Exception {
+        mockMvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("legend"));
+    }
 }
