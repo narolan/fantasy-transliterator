@@ -1,0 +1,42 @@
+/* ===================================================
+   Druidic Transliterator — variables.css
+   =================================================== */
+
+@font-face {
+    font-family: 'Tengwar Annatar';
+    src: url('/fonts/tngan-webfont.woff2') format('woff2'),
+    url('/fonts/tngan-webfont.woff')  format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --color-bg:         #0c0b0f;
+    --color-surface:    #15131c;
+    --color-surface-2:  #1e1b2a;
+    --color-border:     #3a3050;
+    --color-gold:       #c9a84c;
+    --color-gold-light: #e8c97a;
+    --color-gold-dim:   #7a6030;
+    --color-amber:      #ff8c42;
+    --color-text:       #e8e0cc;
+    --color-text-muted: #8b7f6e;
+    --color-rune-glow:  rgba(201, 168, 76, 0.15);
+    --font-display:     'Cinzel Decorative', serif;
+    --font-body:        'Cormorant Garamond', Georgia, serif;
+    --radius-card:      12px;
+    --transition:       0.25s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body.spectrum {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body), sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}

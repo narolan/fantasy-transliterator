@@ -1,0 +1,83 @@
+/* ── Page wrapper ── */
+.page-wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* ── Header ── */
+.site-header { text-align: center; padding-bottom: 1rem; }
+
+.header-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 1.4rem;
+}
+.rune-accent {
+    font-size: 1.4rem;
+    color: var(--color-gold);
+    text-shadow: 0 0 12px var(--color-gold);
+    animation: runeGlow 3s ease-in-out infinite alternate;
+}
+.rune-accent:nth-child(odd)  { animation-delay: 0s; }
+.rune-accent:nth-child(even) { animation-delay: 1.5s; }
+
+@keyframes runeGlow {
+    from { opacity: 0.6; text-shadow: 0 0 8px var(--color-gold-dim); }
+    to   { opacity: 1;   text-shadow: 0 0 20px var(--color-gold), 0 0 40px var(--color-gold-dim); }
+}
+
+.divider-line {
+    flex: 1;
+    height: 1px;
+    max-width: 40px;
+    background: linear-gradient(90deg, transparent, var(--color-gold-dim), transparent);
+}
+
+.site-title {
+    font-family: var(--font-display), sans-serif;
+    font-size: clamp(1.8rem, 6vw, 3.2rem);
+    font-weight: 900;
+    color: var(--color-gold-light);
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.15);
+    margin-bottom: 0.6rem;
+}
+
+.site-subtitle {
+    font-family: var(--font-body), sans-serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* ── Main card ── */
+.main-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: 2.5rem;
+    box-shadow:
+        0 0 0 1px rgba(201,168,76,0.05),
+        0 8px 32px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,255,255,0.04);
+    position: relative;
+    overflow: hidden;
+}
+.main-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-gold), var(--color-amber), var(--color-gold), transparent);
+    opacity: 0.7;
+}

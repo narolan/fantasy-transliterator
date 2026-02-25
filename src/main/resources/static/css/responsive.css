@@ -1,0 +1,16 @@
+/* ── Responsive ── */
+@media (max-width: 540px) {
+    .main-card { padding: 1.5rem; }
+    .button-row { flex-direction: column; align-items: stretch; }
+    .translate-btn, .clear-btn { width: 100%; justify-content: center; }
+    .rune-output-text { font-size: 1.4rem; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+    .rune-bg span { animation: none; }
+    .rune-accent { animation: none; opacity: 0.8; }
+    .rune-output-glow { animation: none; opacity: 0.7; }
+    .output-section { animation: none; }
+    html { scroll-behavior: auto; }
+}

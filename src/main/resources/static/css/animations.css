@@ -1,0 +1,48 @@
+/* ── Floating rune background ── */
+.rune-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+.rune-bg span {
+    position: absolute;
+    font-size: clamp(1.5rem, 4vw, 4rem);
+    color: var(--color-gold-dim);
+    opacity: 0;
+    animation: floatRune 18s infinite linear;
+    user-select: none;
+}
+.rune-bg span:nth-child(1)  { left:  3%; animation-delay:  0s;   animation-duration: 22s; }
+.rune-bg span:nth-child(2)  { left:  8%; animation-delay:  1.5s; animation-duration: 19s; }
+.rune-bg span:nth-child(3)  { left: 14%; animation-delay:  3s;   animation-duration: 25s; }
+.rune-bg span:nth-child(4)  { left: 20%; animation-delay:  0.7s; animation-duration: 20s; }
+.rune-bg span:nth-child(5)  { left: 27%; animation-delay:  5s;   animation-duration: 17s; }
+.rune-bg span:nth-child(6)  { left: 33%; animation-delay:  2s;   animation-duration: 23s; }
+.rune-bg span:nth-child(7)  { left: 40%; animation-delay:  4s;   animation-duration: 21s; }
+.rune-bg span:nth-child(8)  { left: 47%; animation-delay:  1s;   animation-duration: 18s; }
+.rune-bg span:nth-child(9)  { left: 54%; animation-delay:  6s;   animation-duration: 24s; }
+.rune-bg span:nth-child(10) { left: 60%; animation-delay:  2.5s; animation-duration: 20s; }
+.rune-bg span:nth-child(11) { left: 66%; animation-delay:  0.3s; animation-duration: 22s; }
+.rune-bg span:nth-child(12) { left: 72%; animation-delay:  3.5s; animation-duration: 19s; }
+.rune-bg span:nth-child(13) { left: 78%; animation-delay:  1.8s; animation-duration: 26s; }
+.rune-bg span:nth-child(14) { left: 84%; animation-delay:  4.5s; animation-duration: 18s; }
+.rune-bg span:nth-child(15) { left: 90%; animation-delay:  0.9s; animation-duration: 21s; }
+.rune-bg span:nth-child(16) { left:  6%; animation-delay:  7s;   animation-duration: 23s; }
+.rune-bg span:nth-child(17) { left: 18%; animation-delay:  8s;   animation-duration: 20s; }
+.rune-bg span:nth-child(18) { left: 35%; animation-delay:  6.5s; animation-duration: 17s; }
+.rune-bg span:nth-child(19) { left: 50%; animation-delay:  9s;   animation-duration: 22s; }
+.rune-bg span:nth-child(20) { left: 62%; animation-delay:  5.5s; animation-duration: 19s; }
+.rune-bg span:nth-child(21) { left: 74%; animation-delay:  7.5s; animation-duration: 24s; }
+.rune-bg span:nth-child(22) { left: 88%; animation-delay:  3.2s; animation-duration: 21s; }
+.rune-bg span:nth-child(23) { left: 96%; animation-delay: 10s;   animation-duration: 18s; }
+.rune-bg span:nth-child(24) { left: 44%; animation-delay: 11s;   animation-duration: 25s; }
+.rune-bg span:nth-child(25) { left: 56%; animation-delay:  8.5s; animation-duration: 20s; }
+
+@keyframes floatRune {
+    0%   { transform: translateY(105vh) rotate(0deg);   opacity: 0; }
+    5%   { opacity: 0.12; }
+    90%  { opacity: 0.07; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
