@@ -33,3 +33,6 @@ Thumbs.db
 
 # Worktrees
 .worktrees/
+
+# Node
+node_modules/
