@@ -21,14 +21,11 @@
 
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </head>
-<body class="spectrum spectrum--dark spectrum--medium">
+<body class="spectrum spectrum--dark spectrum--medium" th:classappend="${themeClass}">
 
-    <div class="rune-bg" aria-hidden="true">
-        <span>ᚠ</span><span>ᚢ</span><span>ᚦ</span><span>ᚨ</span><span>ᚱ</span>
-        <span>ᚲ</span><span>ᚷ</span><span>ᚹ</span><span>ᚺ</span><span>ᚾ</span>
-        <span>ᛁ</span><span>ᛃ</span><span>ᛇ</span><span>ᛈ</span><span>ᛉ</span>
-        <span>ᛊ</span><span>ᛏ</span><span>ᛒ</span><span>ᛖ</span><span>ᛗ</span>
-        <span>ᛚ</span><span>ᛜ</span><span>ᛞ</span><span>ᛟ</span><span>ᛦ</span>
+    <div class="rune-bg" aria-hidden="true"
+         th:classappend="${selectedScript.fontClass}">
+        <span th:each="glyph : ${selectedScript.backgroundGlyphArray}" th:text="${glyph}"></span>
     </div>
 
     <div class="page-wrapper">
@@ -117,7 +114,7 @@
                         </label>
                         <div class="rune-output-card">
                             <div class="rune-output-glow" aria-hidden="true"></div>
-                            <p class="rune-output-text" th:text="${result.runeText()}"></p>
+                            <p class="rune-output-text" th:classappend="${selectedScript.fontClass}" th:text="${result.runeText()}"></p>
                         </div>
                         <div class="copy-row">
                             <button type="button"
@@ -142,10 +139,10 @@
             <summary class="legend-summary"
                      th:text="${selectedScript.displayName + ' Reference'}">Reference</summary>
             <div class="legend-grid"
-                 th:classappend="${selectedScript.name() == 'TENGWAR'} ? 'tengwar-legend'">
+                 th:classappend="${selectedScript.fontClass}">
                 <div class="legend-pair" th:each="entry : ${legend}">
                     <span class="legend-rune"
-                          th:classappend="${selectedScript.name() == 'TENGWAR'} ? 'tengwar-font'"
+                          th:classappend="${selectedScript.fontClass}"
                           th:text="${entry.glyph()}"></span>
                     <span class="legend-letter" th:text="${entry.label()}"></span>
                 </div>

@@ -54,6 +54,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ── Instant theme switch on script change ─────
+    const scriptSelect = document.getElementById('script');
+    if (scriptSelect) {
+        scriptSelect.addEventListener('change', () => {
+            const themeMap = {
+                'ELDER_FUTHARK': 'theme-futhark',
+                'TENGWAR': 'theme-tengwar',
+                'DETHEK': 'theme-dethek'
+            };
+            document.body.className = document.body.className
+                .replace(/theme-\w+/g, '')
+                .trim() + ' ' + (themeMap[scriptSelect.value] || 'theme-futhark');
+        });
+    }
+
     const shareBtn = document.querySelector('.share-btn');
     if (shareBtn) {
         shareBtn.addEventListener('click', async () => {

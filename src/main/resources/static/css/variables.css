@@ -28,6 +28,36 @@
     --transition:       0.25s ease;
 }
 
+/* ── Tengwar theme — starlit Rivendell, ethereal moonlight ── */
+body.theme-tengwar {
+    --color-bg:         #0a0d14;
+    --color-surface:    #121825;
+    --color-surface-2:  #1a2030;
+    --color-border:     #2a3555;
+    --color-gold:       #8ba4c8;
+    --color-gold-light: #c0cde0;
+    --color-gold-dim:   #4a6080;
+    --color-amber:      #6a8cc0;
+    --color-text:       #d8dce8;
+    --color-text-muted: #6a7890;
+    --color-rune-glow:  rgba(139, 164, 200, 0.15);
+}
+
+/* ── Dethek theme — underground forge, hewn stone, molten metal ── */
+body.theme-dethek {
+    --color-bg:         #0f0c09;
+    --color-surface:    #1c1814;
+    --color-surface-2:  #2a2420;
+    --color-border:     #4a3828;
+    --color-gold:       #d4722a;
+    --color-gold-light: #e8943c;
+    --color-gold-dim:   #8a4a18;
+    --color-amber:      #ff6a2a;
+    --color-text:       #e0d4c4;
+    --color-text-muted: #8a7a68;
+    --color-rune-glow:  rgba(212, 114, 42, 0.15);
+}
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
