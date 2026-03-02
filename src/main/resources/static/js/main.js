@@ -128,32 +128,132 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Live preview ────────────────────────────────
-    if (textarea && scriptSelect) {
-        let debounceTimer;
-        const DEBOUNCE_MS = 250;
+    // ── Download PNG ─────────────────────────────
+    const downloadBtn = document.querySelector('.download-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', async () => {
+            const card = document.querySelector('.rune-output-card');
+            if (!card || typeof html2canvas === 'undefined') return;
 
-        function updatePreview() {
-            const text = textarea.value.trim();
-            const script = scriptSelect.value;
+            try {
+                await document.fonts.ready;
+                const canvas = await html2canvas(card, {
+                    backgroundColor: '#0f0d16',
+                    scale: 2,
+                    useCORS: true,
+                    logging: false
+                });
 
-            if (!text) {
-                hideOutput();
-                return;
+                const link = document.createElement('a');
+                link.download = 'transliteration.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                showFeedback('Image saved!');
+            } catch {
+                showFeedback('Could not generate image');
             }
+        });
+    }
 
-            fetch(`/api/transliterate?text=${encodeURIComponent(text)}&script=${encodeURIComponent(script)}`)
-                .then(r => r.json())
-                .then(data => {
-                    if (data.runeText) {
-                        showOutput(data.runeText, textarea.value.trim(), script);
-                    } else {
-                        hideOutput();
-                    }
-                })
-                .catch(() => { /* silently fail — user can still use submit button */ });
+    // ── History panel ────────────────────────────────
+    const historyList = document.getElementById('historyList');
+    const historyPanel = document.getElementById('historyPanel');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
+    function renderHistory() {
+        if (!historyList) return;
+        const history = getHistory();
+        if (history.length === 0) {
+            historyList.innerHTML = '<p class="history-empty">No translations yet.</p>';
+            return;
+        }
+        historyList.innerHTML = history.map(h => {
+            const truncated = h.inputText.length > 40 ? h.inputText.substring(0, 40) + '…' : h.inputText;
+            return `<div class="history-entry" data-input="${h.inputText.replace(/"/g, '&quot;')}" data-script="${h.script}">
+                <span class="history-rune ${h.fontClass || ''}">${h.runeText.length > 50 ? h.runeText.substring(0, 50) + '…' : h.runeText}</span>
+                <span class="history-meta">
+                    <span class="history-text">"${truncated}"</span>
+                    <span class="history-script">${h.scriptDisplayName}</span>
+                </span>
+            </div>`;
+        }).join('');
+    }
+
+    function saveToHistory(inputText, script, runeText) {
+        if (!inputText || !runeText) return;
+        const selected = scriptSelect ? scriptSelect.options[scriptSelect.selectedIndex] : null;
+        const fontClassMap = { 'ELDER_FUTHARK': '', 'TENGWAR': 'tengwar-font', 'DETHEK': 'dethek-font' };
+        addToHistory({
+            inputText: inputText,
+            script: script,
+            scriptDisplayName: selected ? selected.text : script,
+            runeText: runeText,
+            fontClass: fontClassMap[script] || '',
+            timestamp: Date.now()
+        });
+        renderHistory();
+    }
+
+    if (historyList) {
+        renderHistory();
+
+        historyList.addEventListener('click', (e) => {
+            const entry = e.target.closest('.history-entry');
+            if (!entry) return;
+            if (textarea) textarea.value = entry.dataset.input;
+            if (scriptSelect) {
+                scriptSelect.value = entry.dataset.script;
+                scriptSelect.dispatchEvent(new Event('change'));
+            }
+            if (textarea && textarea.value.trim()) {
+                updatePreview();
+            }
+        });
+    }
+
+    if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener('click', () => {
+            clearHistory();
+            renderHistory();
+        });
+    }
+
+    // Save SSR result to history on page load
+    if (outputSection && outputSection.style.display !== 'none' && runeOutputText && textarea) {
+        const text = textarea.value.trim();
+        const runes = runeOutputText.textContent.trim();
+        const script = scriptSelect ? scriptSelect.value : 'ELDER_FUTHARK';
+        if (text && runes) saveToHistory(text, script, runes);
+    }
+
+    // ── Live preview ────────────────────────────────
+    let debounceTimer;
+    const DEBOUNCE_MS = 250;
+
+    function updatePreview() {
+        const text = textarea ? textarea.value.trim() : '';
+        const script = scriptSelect ? scriptSelect.value : 'ELDER_FUTHARK';
+
+        if (!text) {
+            hideOutput();
+            return;
         }
 
+        fetch(`/api/transliterate?text=${encodeURIComponent(text)}&script=${encodeURIComponent(script)}`)
+            .then(r => r.json())
+            .then(data => {
+                if (data.runeText) {
+                    showOutput(data.runeText, text, script);
+                    saveToHistory(text, script, data.runeText);
+                } else {
+                    hideOutput();
+                }
+            })
+            .catch(() => { /* silently fail — user can still use submit button */ });
+    }
+
+    if (textarea && scriptSelect) {
         textarea.addEventListener('input', () => {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(updatePreview, DEBOUNCE_MS);
