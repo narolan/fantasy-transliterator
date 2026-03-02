@@ -100,37 +100,39 @@
                     </a>
                 </div>
 
-                <th:block th:if="${result != null and result.hasContent()}">
-                    <div class="result-divider">
-                        <span class="divider-rune" aria-hidden="true">᛭</span>
-                        <div class="hr-line"></div>
-                        <span class="divider-rune" aria-hidden="true">᛭</span>
-                    </div>
+                <div class="result-divider" id="resultDivider"
+                     th:style="${result != null and result.hasContent()} ? '' : 'display:none'">
+                    <span class="divider-rune" aria-hidden="true">᛭</span>
+                    <div class="hr-line"></div>
+                    <span class="divider-rune" aria-hidden="true">᛭</span>
+                </div>
 
-                    <section class="output-section" id="output">
-                        <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM"
-                               th:text="${selectedScript.displayName + ' Output'}">
-                            Output
-                        </label>
-                        <div class="rune-output-card">
-                            <div class="rune-output-glow" aria-hidden="true"></div>
-                            <p class="rune-output-text" th:classappend="${selectedScript.fontClass}" th:text="${result.runeText()}"></p>
-                        </div>
-                        <div class="copy-row">
-                            <button type="button"
-                                    class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS copy-btn"
-                                    th:attr="data-text=${result.runeText()}">
-                                <span class="spectrum-Button-label">⎘ Copy</span>
-                            </button>
-                            <button type="button"
-                                    class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS share-btn"
-                                    th:attr="data-text=${inputText}, data-script=${selectedScript.name()}">
-                                <span class="spectrum-Button-label">⎘ Share</span>
-                            </button>
-                            <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
-                        </div>
-                    </section>
-                </th:block>
+                <section class="output-section" id="output"
+                         th:style="${result != null and result.hasContent()} ? '' : 'display:none'">
+                    <label class="spectrum-FieldLabel spectrum-FieldLabel--sizeM" id="outputLabel"
+                           th:text="${selectedScript.displayName + ' Output'}">
+                        Output
+                    </label>
+                    <div class="rune-output-card">
+                        <div class="rune-output-glow" aria-hidden="true"></div>
+                        <p class="rune-output-text" id="runeOutputText"
+                           th:classappend="${selectedScript.fontClass}"
+                           th:text="${result != null} ? ${result.runeText()} : ''"></p>
+                    </div>
+                    <div class="copy-row">
+                        <button type="button"
+                                class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS copy-btn"
+                                th:attr="data-text=${result != null ? result.runeText() : ''}">
+                            <span class="spectrum-Button-label">⎘ Copy</span>
+                        </button>
+                        <button type="button"
+                                class="spectrum-Button spectrum-Button--outline spectrum-Button--secondary spectrum-Button--sizeS share-btn"
+                                th:attr="data-text=${inputText}, data-script=${selectedScript.name()}">
+                            <span class="spectrum-Button-label">⎘ Share</span>
+                        </button>
+                        <span class="copy-feedback" id="copyFeedback" aria-live="polite"></span>
+                    </div>
+                </section>
 
             </form>
         </main>
@@ -151,6 +153,10 @@
 
         <footer class="site-footer">
             <p th:text="${selectedScript.description}"></p>
+            <p class="footer-feedback">
+                <a href="https://github.com/narolan/fantasy-transliterator/issues" target="_blank" rel="noopener"
+                   class="feedback-link">Send Feedback</a>
+            </p>
         </footer>
 
     </div>

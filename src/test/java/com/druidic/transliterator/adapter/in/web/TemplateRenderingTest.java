@@ -69,10 +69,11 @@ class TemplateRenderingTest {
     }
 
     @Test
-    void outputSectionAbsentWhenNoResult() throws Exception {
+    void outputSectionHiddenWhenNoResult() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(not(containsString("id=\"output\""))));
+                .andExpect(content().string(containsString("id=\"output\"")))
+                .andExpect(content().string(containsString("display:none")));
     }
 
     @Test
