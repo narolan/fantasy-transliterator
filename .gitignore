@@ -34,5 +34,8 @@ Thumbs.db
 # Worktrees
 .worktrees/
 
+# Gradle local config
+gradle.properties
+
 # Node
 node_modules/
