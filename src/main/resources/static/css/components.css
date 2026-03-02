@@ -285,3 +285,11 @@ details[open] .legend-summary::before { content: '▾ '; }
 
 /* ── Footer ── */
 .site-footer { text-align: center; color: var(--color-text-muted); font-style: italic; font-size: 0.85rem; }
+.footer-feedback { margin-top: 0.5rem; }
+.feedback-link {
+    color: var(--color-gold-dim);
+    text-decoration: none;
+    font-style: italic;
+    transition: color var(--transition);
+}
+.feedback-link:hover { color: var(--color-gold); }
