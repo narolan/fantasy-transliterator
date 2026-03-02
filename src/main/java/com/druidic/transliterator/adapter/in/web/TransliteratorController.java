@@ -25,10 +25,12 @@ public class TransliteratorController {
     private final Map<Script, TransliteratePort> transliterators;
 
     public TransliteratorController(@Qualifier("elderFuthark") TransliteratePort elderFutharkTransliterator,
-                                    @Qualifier("tengwar") TransliteratePort tengwarTransliterator) {
+                                    @Qualifier("tengwar") TransliteratePort tengwarTransliterator,
+                                    @Qualifier("dethek") TransliteratePort dethekTransliterator) {
         this.transliterators = Map.of(
                 Script.ELDER_FUTHARK, elderFutharkTransliterator,
-                Script.TENGWAR, tengwarTransliterator
+                Script.TENGWAR, tengwarTransliterator,
+                Script.DETHEK, dethekTransliterator
         );
     }
 

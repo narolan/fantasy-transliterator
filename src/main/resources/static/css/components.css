@@ -184,7 +184,7 @@
 }
 
 .rune-output-text {
-    font-family: 'Tengwar Annatar', 'Noto Sans Runic', var(--font-body), serif;
+    font-family: 'Tengwar Annatar', 'Dethek Stone', 'Noto Sans Runic', var(--font-body), serif;
     position: relative;
     z-index: 1;
     font-size: clamp(1.5rem, 4vw, 2.2rem);
@@ -267,6 +267,13 @@ details[open] .legend-summary::before { content: '▾ '; }
 .legend-rune.tengwar-font {
     font-family: 'Tengwar Annatar', serif;
     font-size: 1.8rem;
+}
+.legend-rune.dethek-font {
+    font-family: 'Dethek Stone', serif;
+    font-size: 1.8rem;
+}
+.dethek-font {
+    font-family: 'Dethek Stone', serif;
 }
 .legend-letter {
     font-family: var(--font-display), sans-serif;

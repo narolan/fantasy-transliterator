@@ -12,7 +12,13 @@ public enum Script {
             "Tengwar \u00b7 Tolkien\u2019s Elvish script \u00b7 English Mode",
             "theme-tengwar",
             "tengwar-font",
-            "1 2 3 q w e r t y u a s d f g h j k l z x 5 6 8 9");
+            "1 2 3 q w e r t y u a s d f g h j k l z x 5 6 8 9"),
+
+    DETHEK("Dethek",
+            "Dethek \u00b7 D&D Dwarvish runic script \u00b7 Forgotten Realms",
+            "theme-dethek",
+            "dethek-font",
+            "a b c d e f g h i j k l m n o p q r s t u v w x y z");
 
     private final String displayName;
     private final String description;

@@ -10,6 +10,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Dethek Stone';
+    src: url('/fonts/dethek_stone.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 :root {
     --color-bg:         #0c0b0f;
     --color-surface:    #15131c;

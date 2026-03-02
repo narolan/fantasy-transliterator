@@ -70,6 +70,13 @@ class TransliteratorControllerTest {
     }
 
     @Test
+    void dethekScriptWorks() throws Exception {
+        mockMvc.perform(post("/").param("inputText", "hello").param("script", "DETHEK"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("result"));
+    }
+
+    @Test
     void modelContainsLegendData() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
