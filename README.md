@@ -1,6 +1,6 @@
 # Fantasy Transliterator
 
-A full-stack web application that transliterates English text into ancient and fictional scripts. Currently supports **Elder Futhark** runes and **Tengwar** (Tolkien's Elvish script), with a clean dropdown to switch between them.
+A full-stack web application that transliterates English text into ancient and fictional scripts. Currently supports **Elder Futhark** runes, **Tengwar** (Tolkien's Elvish script), and **Dethek** (Dwarven fantasy language) with a clean dropdown to switch between them.
 
 Built with Java 17, Spring Boot 3, Thymeleaf (server-side rendering), Gradle, and Adobe Spectrum CSS. Deployable to [Render](https://render.com) via Docker.
 
