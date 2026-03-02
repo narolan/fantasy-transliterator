@@ -24,7 +24,7 @@ class TemplateRenderingTest {
     void pageTitleRenders() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("<title>Druidic Transliterator</title>")));
+                .andExpect(content().string(containsString("<title>Fantasy Transliterator</title>")));
     }
 
     @Test

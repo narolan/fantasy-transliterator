@@ -1,4 +1,4 @@
-/* Druidic Transliterator — main.js */
+/* Fantasy Transliterator — main.js */
 
 document.addEventListener('DOMContentLoaded', () => {
 

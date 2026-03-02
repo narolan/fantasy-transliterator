@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: druidic-transliterator
+    name: fantasy-transliterator
     runtime: docker
     plan: free          # change to 'starter' or higher for production
     dockerfilePath: ./Dockerfile

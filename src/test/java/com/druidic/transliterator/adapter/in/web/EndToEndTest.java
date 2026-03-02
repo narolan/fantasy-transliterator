@@ -36,7 +36,7 @@ class EndToEndTest {
     void loadPageAndVerifyStructure() throws Exception {
         HtmlPage page = webClient.getPage("http://localhost/");
 
-        assertEquals("Druidic Transliterator", page.getTitleText());
+        assertEquals("Fantasy Transliterator", page.getTitleText());
         assertNotNull(page.getHtmlElementById("transliterator-form"));
         assertNotNull(page.getHtmlElementById("inputText"));
         assertNotNull(page.getHtmlElementById("script"));
