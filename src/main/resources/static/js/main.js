@@ -98,6 +98,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ── Instant theme switch on script change ─────
+    const legendGrid = document.querySelector('.legend-grid');
+    const legendSummary = document.querySelector('.legend-summary');
+
+    function updateLegend(script) {
+        if (!legendGrid) return;
+        fetch(`/api/legend?script=${encodeURIComponent(script)}`)
+            .then(r => r.json())
+            .then(data => {
+                legendGrid.className = 'legend-grid ' + (data.fontClass || '');
+                legendGrid.innerHTML = data.entries.map(e =>
+                    `<div class="legend-pair">
+                        <span class="legend-rune ${data.fontClass || ''}">${e.glyph}</span>
+                        <span class="legend-letter">${e.label}</span>
+                    </div>`
+                ).join('');
+                if (legendSummary) {
+                    legendSummary.textContent = data.displayName + ' Reference';
+                }
+            })
+            .catch(() => {});
+    }
+
     if (scriptSelect) {
         scriptSelect.addEventListener('change', () => {
             const themeMap = {
@@ -108,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.className = document.body.className
                 .replace(/theme-\w+/g, '')
                 .trim() + ' ' + (themeMap[scriptSelect.value] || 'theme-futhark');
+            updateLegend(scriptSelect.value);
         });
     }
 

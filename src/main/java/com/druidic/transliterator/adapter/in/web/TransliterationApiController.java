@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.druidic.transliterator.core.LegendEntry;
+
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -51,6 +54,25 @@ public class TransliterationApiController {
                 .transliterate(new TransliterationRequest(trimmed, selectedScript));
 
         return Map.of("runeText", result.runeText());
+    }
+
+    @GetMapping("/legend")
+    public Map<String, Object> legend(
+            @RequestParam(defaultValue = "ELDER_FUTHARK") String script) {
+
+        Script selectedScript = parseScript(script);
+        TransliteratePort transliterator = transliterators.get(selectedScript);
+        if (transliterator == null) {
+            transliterator = transliterators.get(Script.ELDER_FUTHARK);
+            selectedScript = Script.ELDER_FUTHARK;
+        }
+
+        List<LegendEntry> legend = transliterator.getLegend();
+        return Map.of(
+                "entries", legend,
+                "fontClass", selectedScript.getFontClass(),
+                "displayName", selectedScript.getDisplayName()
+        );
     }
 
     private Script parseScript(String raw) {
